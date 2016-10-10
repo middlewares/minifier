@@ -28,7 +28,7 @@ class MinifierTest extends \PHPUnit_Framework_TestCase
                 'text/javascript',
                 file_get_contents(__DIR__.'/assets/test.js'),
                 trim(file_get_contents(__DIR__.'/assets/test.min.js')),
-            ]
+            ],
         ];
 
         return $data;
@@ -46,6 +46,7 @@ class MinifierTest extends \PHPUnit_Framework_TestCase
             function () use ($mime, $content) {
                 $response = new Response();
                 $response->getBody()->write($content);
+
                 return $response->withHeader('Content-Type', $mime);
             },
         ]))->dispatch(new Request());

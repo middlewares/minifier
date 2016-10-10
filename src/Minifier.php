@@ -4,7 +4,6 @@ namespace Middlewares;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Interop\Http\Middleware\MiddlewareInterface;
 use Interop\Http\Middleware\DelegateInterface;
 
 abstract class Minifier
@@ -17,8 +16,8 @@ abstract class Minifier
     /**
      * Process a server request and return a response.
      *
-     * @param RequestInterface $request
-     * @param DelegateInterface      $delegate
+     * @param RequestInterface  $request
+     * @param DelegateInterface $delegate
      *
      * @return ResponseInterface
      */

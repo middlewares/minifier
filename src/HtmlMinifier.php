@@ -41,13 +41,13 @@ class HtmlMinifier extends Minifier implements MiddlewareInterface
     /**
      * Configure if inline javascript should be minified.
      *
-     * @param bool $inlinejs
+     * @param bool $inlineJs
      *
      * @return self
      */
-    public function inlineJs($inlinejs = true)
+    public function inlineJs($inlineJs = true)
     {
-        $this->inlinejs = $inlinejs;
+        $this->inlineJs = $inlineJs;
 
         return $this;
     }
@@ -58,7 +58,7 @@ class HtmlMinifier extends Minifier implements MiddlewareInterface
     protected function minify($content)
     {
         $options = [
-            'jsCleanComments' => true
+            'jsCleanComments' => true,
         ];
 
         if ($this->inlineCss) {
