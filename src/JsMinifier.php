@@ -2,10 +2,10 @@
 
 namespace Middlewares;
 
-use Interop\Http\Middleware\MiddlewareInterface;
+use Interop\Http\Middleware\ServerMiddlewareInterface;
 use JSMin;
 
-class JsMinifier extends Minifier implements MiddlewareInterface
+class JsMinifier extends Minifier implements ServerMiddlewareInterface
 {
     /**
      * @var string

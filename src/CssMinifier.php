@@ -2,10 +2,10 @@
 
 namespace Middlewares;
 
-use Interop\Http\Middleware\MiddlewareInterface;
+use Interop\Http\Middleware\ServerMiddlewareInterface;
 use Minify_CSS;
 
-class CssMinifier extends Minifier implements MiddlewareInterface
+class CssMinifier extends Minifier implements ServerMiddlewareInterface
 {
     /**
      * @var string

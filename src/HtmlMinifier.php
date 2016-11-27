@@ -2,12 +2,12 @@
 
 namespace Middlewares;
 
-use Interop\Http\Middleware\MiddlewareInterface;
+use Interop\Http\Middleware\ServerMiddlewareInterface;
 use Minify_HTML;
 use Minify_CSS;
 use JSMin;
 
-class HtmlMinifier extends Minifier implements MiddlewareInterface
+class HtmlMinifier extends Minifier implements ServerMiddlewareInterface
 {
     /**
      * @var bool

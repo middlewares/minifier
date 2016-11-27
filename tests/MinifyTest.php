@@ -5,9 +5,10 @@ namespace Middlewares\Tests;
 use Middlewares\HtmlMinifier;
 use Middlewares\CssMinifier;
 use Middlewares\JsMinifier;
-use Zend\Diactoros\Request;
+use Middlewares\Utils\Dispatcher;
+use Middlewares\Utils\CallableMiddleware;
+use Zend\Diactoros\ServerRequest;
 use Zend\Diactoros\Response;
-use mindplay\middleman\Dispatcher;
 
 class MinifierTest extends \PHPUnit_Framework_TestCase
 {
@@ -43,13 +44,13 @@ class MinifierTest extends \PHPUnit_Framework_TestCase
             new CssMinifier(),
             new JsMinifier(),
             new HtmlMinifier(),
-            function () use ($mime, $content) {
+            new CallableMiddleware(function () use ($mime, $content) {
                 $response = new Response();
                 $response->getBody()->write($content);
 
                 return $response->withHeader('Content-Type', $mime);
-            },
-        ]))->dispatch(new Request());
+            }),
+        ]))->dispatch(new ServerRequest());
 
         $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
         $this->assertEquals($expected, (string) $response->getBody());
