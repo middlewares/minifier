@@ -38,9 +38,7 @@ class MinifierTest extends \PHPUnit_Framework_TestCase
      */
     public function testMinifier($mime, $content, $expected)
     {
-        $request = Factory::createServerRequest();
-
-        $response = (new Dispatcher([
+        $response = Dispatcher::run([
             new CssMinifier(),
             new JsMinifier(),
             new HtmlMinifier(),
@@ -50,7 +48,7 @@ class MinifierTest extends \PHPUnit_Framework_TestCase
 
                 return $response->withHeader('Content-Type', $mime);
             },
-        ]))->dispatch($request);
+        ]);
 
         $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
         $this->assertEquals($expected, (string) $response->getBody());
