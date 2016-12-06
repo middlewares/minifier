@@ -6,9 +6,7 @@ use Middlewares\HtmlMinifier;
 use Middlewares\CssMinifier;
 use Middlewares\JsMinifier;
 use Middlewares\Utils\Dispatcher;
-use Middlewares\Utils\CallableMiddleware;
-use Zend\Diactoros\ServerRequest;
-use Zend\Diactoros\Response;
+use Middlewares\Utils\Factory;
 
 class MinifierTest extends \PHPUnit_Framework_TestCase
 {
@@ -40,17 +38,19 @@ class MinifierTest extends \PHPUnit_Framework_TestCase
      */
     public function testMinifier($mime, $content, $expected)
     {
+        $request = Factory::createServerRequest();
+
         $response = (new Dispatcher([
             new CssMinifier(),
             new JsMinifier(),
             new HtmlMinifier(),
-            new CallableMiddleware(function () use ($mime, $content) {
-                $response = new Response();
+            function () use ($mime, $content) {
+                $response = Factory::createResponse();
                 $response->getBody()->write($content);
 
                 return $response->withHeader('Content-Type', $mime);
-            }),
-        ]))->dispatch(new ServerRequest());
+            },
+        ]))->dispatch($request);
 
         $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
         $this->assertEquals($expected, (string) $response->getBody());
