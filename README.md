@@ -33,7 +33,7 @@ composer require middlewares/minifier
 $dispatcher = new Dispatcher([
     new Middlewares\CssMinify(),
     new Middlewares\JsMinify(),
-	new Middlewares\HtmlMinify(),
+    new Middlewares\HtmlMinify(),
 ]);
 
 $response = $dispatcher->dispatch(new ServerRequest());
