@@ -5,6 +5,7 @@ namespace Middlewares;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Interop\Http\ServerMiddleware\DelegateInterface;
+use Middlewares\Utils\Helpers;
 
 abstract class Minifier
 {
@@ -29,7 +30,9 @@ abstract class Minifier
             $stream = Utils\Factory::createStream();
             $stream->write($this->minify((string) $response->getBody()));
 
-            return $response->withBody($stream);
+            $response = $response->withBody($stream);
+
+            return Helpers::fixContentLength($response);
         }
 
         return $response;

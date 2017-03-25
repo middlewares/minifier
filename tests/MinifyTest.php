@@ -50,7 +50,7 @@ class MinifierTest extends \PHPUnit_Framework_TestCase
             },
         ]);
 
-        $this->assertInstanceOf('Psr\\Http\\Message\\ResponseInterface', $response);
         $this->assertEquals($expected, (string) $response->getBody());
+        $this->assertEquals($response->getBody()->getSize(), $response->getHeaderLine('Content-Length'));
     }
 }
