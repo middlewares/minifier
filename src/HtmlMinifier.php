@@ -5,7 +5,7 @@ namespace Middlewares;
 use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Minify_HTML;
 use Minify_CSS;
-use JSMin;
+use JSMin\JSMin;
 
 class HtmlMinifier extends Minifier implements MiddlewareInterface
 {

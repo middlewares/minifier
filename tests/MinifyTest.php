@@ -51,6 +51,5 @@ class MinifierTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $this->assertEquals($expected, (string) $response->getBody());
-        $this->assertEquals($response->getBody()->getSize(), $response->getHeaderLine('Content-Length'));
     }
 }
