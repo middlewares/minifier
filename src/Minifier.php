@@ -2,10 +2,10 @@
 
 namespace Middlewares;
 
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\ResponseInterface;
 use Interop\Http\ServerMiddleware\DelegateInterface;
 use Middlewares\Utils\Helpers;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 abstract class Minifier
 {

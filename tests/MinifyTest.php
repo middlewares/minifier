@@ -2,12 +2,12 @@
 
 namespace Middlewares\Tests;
 
-use PHPUnit\Framework\TestCase;
-use Middlewares\HtmlMinifier;
 use Middlewares\CssMinifier;
+use Middlewares\HtmlMinifier;
 use Middlewares\JsMinifier;
 use Middlewares\Utils\Dispatcher;
 use Middlewares\Utils\Factory;
+use PHPUnit\Framework\TestCase;
 
 class MinifierTest extends TestCase
 {
@@ -36,6 +36,9 @@ class MinifierTest extends TestCase
 
     /**
      * @dataProvider minifierProvider
+     * @param mixed $mime
+     * @param mixed $content
+     * @param mixed $expected
      */
     public function testMinifier($mime, $content, $expected)
     {
