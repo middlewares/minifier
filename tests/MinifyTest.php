@@ -2,13 +2,14 @@
 
 namespace Middlewares\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Middlewares\HtmlMinifier;
 use Middlewares\CssMinifier;
 use Middlewares\JsMinifier;
 use Middlewares\Utils\Dispatcher;
 use Middlewares\Utils\Factory;
 
-class MinifierTest extends \PHPUnit_Framework_TestCase
+class MinifierTest extends TestCase
 {
     public function minifierProvider()
     {
