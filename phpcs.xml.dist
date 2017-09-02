@@ -4,6 +4,7 @@
 
     <!-- display progress -->
     <arg value="p"/>
+    <arg name="report" value="full"/>
     <arg name="colors"/>
 
     <!-- coding standard -->
@@ -12,5 +13,4 @@
     <!-- Paths to check -->
     <file>src</file>
     <file>tests</file>
-    <exclude-pattern>tests/assets/*</exclude-pattern>
 </ruleset>
