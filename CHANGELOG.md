@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [UNRELEASED]
 
+### Changed
+
+* Append `.dist` suffix to phpcs.xml and phpunit.xml files
+* Changed the configuration of phpcs and php_cs
+* Upgraded phpunit to the latest version and improved its config file
 * Updated to `mrclay/minify#3.0`
 
 ## [0.3.1] - 2017-03-25
