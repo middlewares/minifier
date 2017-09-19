@@ -2,7 +2,7 @@
 
 namespace Middlewares;
 
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
+use Interop\Http\Server\MiddlewareInterface;
 use Minify_CSS;
 
 class CssMinifier extends Minifier implements MiddlewareInterface

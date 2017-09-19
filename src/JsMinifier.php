@@ -2,7 +2,7 @@
 
 namespace Middlewares;
 
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
+use Interop\Http\Server\MiddlewareInterface;
 use JSMin\JSMin;
 
 class JsMinifier extends Minifier implements MiddlewareInterface
