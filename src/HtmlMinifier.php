@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Middlewares;
 
@@ -26,12 +27,8 @@ class HtmlMinifier extends Minifier implements MiddlewareInterface
 
     /**
      * Configure if inline css should be minified.
-     *
-     * @param bool $inlineCss
-     *
-     * @return self
      */
-    public function inlineCss($inlineCss = true)
+    public function inlineCss(bool $inlineCss = true): self
     {
         $this->inlineCss = $inlineCss;
 
@@ -40,12 +37,8 @@ class HtmlMinifier extends Minifier implements MiddlewareInterface
 
     /**
      * Configure if inline javascript should be minified.
-     *
-     * @param bool $inlineJs
-     *
-     * @return self
      */
-    public function inlineJs($inlineJs = true)
+    public function inlineJs(bool $inlineJs = true): self
     {
         $this->inlineJs = $inlineJs;
 
@@ -55,7 +48,7 @@ class HtmlMinifier extends Minifier implements MiddlewareInterface
     /**
      * {@inheritdoc}
      */
-    protected function minify($content)
+    protected function minify(string $content): string
     {
         $options = [
             'jsCleanComments' => true,

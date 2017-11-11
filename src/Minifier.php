@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Middlewares;
 
@@ -16,13 +17,8 @@ abstract class Minifier
 
     /**
      * Process a server request and return a response.
-     *
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
      */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler)
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $response = $handler->handle($request);
 
@@ -40,10 +36,6 @@ abstract class Minifier
 
     /**
      * Minify the body content.
-     *
-     * @param string $content
-     *
-     * @return string
      */
-    abstract protected function minify($content);
+    abstract protected function minify(string $content): string;
 }

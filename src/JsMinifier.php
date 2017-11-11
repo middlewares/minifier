@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Middlewares;
 
@@ -15,7 +16,7 @@ class JsMinifier extends Minifier implements MiddlewareInterface
     /**
      * {@inheritdoc}
      */
-    protected function minify($content)
+    protected function minify(string $content): string
     {
         return JSMin::minify($content);
     }
