@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Middlewares\Tests;
 
@@ -11,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 
 class MinifierTest extends TestCase
 {
-    public function minifierProvider()
+    public function minifierProvider(): array
     {
         $data = [
             [
@@ -36,11 +37,8 @@ class MinifierTest extends TestCase
 
     /**
      * @dataProvider minifierProvider
-     * @param mixed $mime
-     * @param mixed $content
-     * @param mixed $expected
      */
-    public function testMinifier($mime, $content, $expected)
+    public function testMinifier(string $mime, string $content, string $expected)
     {
         $response = Dispatcher::run([
             new CssMinifier(),
@@ -53,6 +51,23 @@ class MinifierTest extends TestCase
                 return $response->withHeader('Content-Type', $mime);
             },
         ]);
+
+        $this->assertEquals($expected, (string) $response->getBody());
+    }
+
+    public function testHtmlOnlyMinifier()
+    {
+        $response = Dispatcher::run([
+            (new HtmlMinifier())
+                ->inlineCss(false)
+                ->inlineJs(false),
+            function () {
+                echo file_get_contents(__DIR__.'/assets/test.html');
+                return Factory::createResponse()->withHeader('Content-Type', 'text/html');
+            },
+        ]);
+
+        $expected = trim(file_get_contents(__DIR__.'/assets/test-html.min.html'));
 
         $this->assertEquals($expected, (string) $response->getBody());
     }
