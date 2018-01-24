@@ -3,10 +3,10 @@ declare(strict_types = 1);
 
 namespace Middlewares;
 
-use Psr\Http\Server\MiddlewareInterface;
 use JSMin\JSMin;
 use Minify_CSS;
 use Minify_HTML;
+use Psr\Http\Server\MiddlewareInterface;
 
 class HtmlMinifier extends Minifier implements MiddlewareInterface
 {

@@ -3,8 +3,8 @@ declare(strict_types = 1);
 
 namespace Middlewares;
 
-use Psr\Http\Server\MiddlewareInterface;
 use Minify_CSS;
+use Psr\Http\Server\MiddlewareInterface;
 
 class CssMinifier extends Minifier implements MiddlewareInterface
 {
