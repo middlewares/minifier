@@ -3,8 +3,7 @@ declare(strict_types = 1);
 
 namespace Middlewares;
 
-use Interop\Http\Server\RequestHandlerInterface;
-use Middlewares\Utils\Helpers;
+use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -26,9 +25,8 @@ abstract class Minifier
             $stream = Utils\Factory::createStream();
             $stream->write($this->minify((string) $response->getBody()));
 
-            $response = $response->withBody($stream);
-
-            return Helpers::fixContentLength($response);
+            return $response->withBody($stream)
+                ->withoutHeader('Content-Length');
         }
 
         return $response;
