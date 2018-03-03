@@ -31,9 +31,9 @@ composer require middlewares/minifier
 
 ```php
 $dispatcher = new Dispatcher([
-    new Middlewares\CssMinify(),
-    new Middlewares\JsMinify(),
-    new Middlewares\HtmlMinify(),
+    new Middlewares\CssMinifier(),
+    new Middlewares\JsMinifier(),
+    new Middlewares\HtmlMinifier(),
 ]);
 
 $response = $dispatcher->dispatch(new ServerRequest());
