@@ -3,12 +3,15 @@ declare(strict_types = 1);
 
 namespace Middlewares;
 
+use Middlewares\Utils\Traits\HasStreamFactory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 abstract class Minifier
 {
+    use HasStreamFactory;
+
     /**
      * @var string
      */
@@ -22,8 +25,7 @@ abstract class Minifier
         $response = $handler->handle($request);
 
         if (stripos($response->getHeaderLine('Content-Type'), $this->mimetype) === 0) {
-            $stream = Utils\Factory::createStream();
-            $stream->write($this->minify((string) $response->getBody()));
+            $stream = $this->createStream($this->minify((string) $response->getBody()));
 
             return $response->withBody($stream)
                 ->withoutHeader('Content-Length');
