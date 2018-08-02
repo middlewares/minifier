@@ -16,7 +16,7 @@ Middleware to minify the `Html`, `CSS` and `Javascript` content using [mrclay/mi
 ## Requirements
 
 * PHP >= 7.0
-* A [PSR-7](https://packagist.org/providers/psr/http-message-implementation) http message implementation ([Diactoros](https://github.com/zendframework/zend-diactoros), [Guzzle](https://github.com/guzzle/psr7), [Slim](https://github.com/slimphp/Slim), etc...)
+* A [PSR-7 http library](https://github.com/middlewares/awesome-psr15-middlewares#psr-7-implementations)
 * A [PSR-15 middleware dispatcher](https://github.com/middlewares/awesome-psr15-middlewares#dispatcher)
 
 ## Installation
@@ -51,14 +51,25 @@ Set `false` to do not minify inline css. (`true` by default)
 
 Set `false` to do not minify inline js. (`true` by default)
 
+#### `streamFactory(Psr\Http\Message\StreamFactoryInterface $streamFactory)`
+
+A PSR-17 factory to create the response body.
+
 ## CssMinifier
 
 Minifies the code of css responses. Make sure the response contains the header `Content-Type: text/css`.
+
+#### `streamFactory(Psr\Http\Message\StreamFactoryInterface $streamFactory)`
+
+A PSR-17 factory to create the response body.
 
 ## JsMinifier
 
 Minifies the code of javascript responses. Make sure the response contains the header `Content-Type: text/javascript`.
 
+#### `streamFactory(Psr\Http\Message\StreamFactoryInterface $streamFactory)`
+
+A PSR-17 factory to create the response body.
 
 ---
 
