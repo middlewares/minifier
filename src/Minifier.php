@@ -4,6 +4,8 @@ declare(strict_types = 1);
 namespace Middlewares;
 
 use Middlewares\Utils\Traits\HasStreamFactory;
+use Middlewares\Utils\Factory;
+use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -16,6 +18,11 @@ abstract class Minifier
      * @var string
      */
     protected $mimetype;
+
+    public function __construct(StreamFactoryInterface $streamFactory = null)
+    {
+        $this->streamFactory = $streamFactory ?: Factory::getStreamFactory();
+    }
 
     /**
      * Process a server request and return a response.
