@@ -5,17 +5,16 @@
 [![Build Status][ico-travis]][link-travis]
 [![Quality Score][ico-scrutinizer]][link-scrutinizer]
 [![Total Downloads][ico-downloads]][link-downloads]
-[![SensioLabs Insight][ico-sensiolabs]][link-sensiolabs]
 
-Middleware to minify the `Html`, `CSS` and `Javascript` content using [mrclay/minify](https://github.com/mrclay/minify). This package is splited into the following components:
+Middleware to minify the `Html`, `CSS` and `Javascript` content using [wyrihaximus/compress](https://github.com/WyriHaximus/php-compress) and the following compressors by default:
 
-* [HtmlMinifier](#htmlminifier)
-* [CssMinifier](#cssminifier)
-* [JsMinifier](#jsminifier)
+- [wyrihaximus/html-compress](https://github.com/WyriHaximus/HtmlCompress)
+- [wyrihaximus/css-compress](https://github.com/WyriHaximus/php-css-compress)
+- [wyrihaximus/js-compress](https://github.com/WyriHaximus/php-js-compress)
 
 ## Requirements
 
-* PHP >= 7.0
+* PHP >= 7.2
 * A [PSR-7 http library](https://github.com/middlewares/awesome-psr15-middlewares#psr-7-implementations)
 * A [PSR-15 middleware dispatcher](https://github.com/middlewares/awesome-psr15-middlewares#dispatcher)
 
@@ -30,46 +29,43 @@ composer require middlewares/minifier
 ## Example
 
 ```php
-$dispatcher = new Dispatcher([
-    new Middlewares\CssMinifier(),
-    new Middlewares\JsMinifier(),
-    new Middlewares\HtmlMinifier(),
+Dispatcher::run([
+    Middlewares\Minifier::html(),
+    Middlewares\Minifier::css(),
+    Middlewares\Minifier::js(),
 ]);
-
-$response = $dispatcher->dispatch(new ServerRequest());
 ```
 
-## HtmlMinifier
+## Usage
 
-Minifies the code of html responses. Make sure the response contains the header `Content-Type: text/html` (you can use [middlewares/negotiation](https://github.com/middlewares/negotiation)).
+This middleware minify the code of http responses using any compressor implementing the `WyriHaximus\Compress\CompressorInterface`. The code format is detected from the `Content-Type` header, so make sure your responses contains this header (you may want to use [middlewares/negotiation](https://github.com/middlewares/negotiation) for that).
 
-#### `inlineCss($inlineCss = true)`
+```php
+use WyriHaximus\HtmlCompress\Factory;
 
-Set `false` to do not minify inline css. (`true` by default)
+$compressor = Factory::construct();
+$mimeType = 'text/html';
 
-#### `inlineJs($inlineJs = true)`
+$minifier = new Middlewares\Minifier($compressor, $mimeType);
+```
 
-Set `false` to do not minify inline js. (`true` by default)
+Optionally, you can provide a `Psr\Http\Message\StreamFactoryInterface` as third argument to create the response body. If it's not defined, [Middleware\Utils\Factory](https://github.com/middlewares/utils#factory) will be used to detect it automatically.
 
-#### `streamFactory(Psr\Http\Message\StreamFactoryInterface $streamFactory)`
+```php
+$streamFactory = new MyOwnStreamFactory();
 
-A PSR-17 factory to create the response body.
+$minifier = new Middlewares\Minifier($compressor, $mimeType, $streamFactory);
+```
 
-## CssMinifier
+### Helpers
 
-Minifies the code of css responses. Make sure the response contains the header `Content-Type: text/css`.
+Three static functions are provided to create instances of this middleware with common configuration for html, css and js responses:
 
-#### `streamFactory(Psr\Http\Message\StreamFactoryInterface $streamFactory)`
-
-A PSR-17 factory to create the response body.
-
-## JsMinifier
-
-Minifies the code of javascript responses. Make sure the response contains the header `Content-Type: text/javascript`.
-
-#### `streamFactory(Psr\Http\Message\StreamFactoryInterface $streamFactory)`
-
-A PSR-17 factory to create the response body.
+```php
+$htmlMinifier = Middlewares\Minifier::css();
+$cssMinifier = Middlewares\Minifier::css();
+$jsMinifier = Middlewares\Minifier::js();
+```
 
 ---
 
@@ -82,10 +78,8 @@ The MIT License (MIT). Please see [LICENSE](LICENSE) for more information.
 [ico-travis]: https://img.shields.io/travis/middlewares/minifier/master.svg?style=flat-square
 [ico-scrutinizer]: https://img.shields.io/scrutinizer/g/middlewares/minifier.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/middlewares/minifier.svg?style=flat-square
-[ico-sensiolabs]: https://img.shields.io/sensiolabs/i/c7fc5c99-df24-488a-8142-ce1c9b631b97.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/middlewares/minifier
 [link-travis]: https://travis-ci.org/middlewares/minifier
 [link-scrutinizer]: https://scrutinizer-ci.com/g/middlewares/minifier
 [link-downloads]: https://packagist.org/packages/middlewares/minifier
-[link-sensiolabs]: https://insight.sensiolabs.com/projects/c7fc5c99-df24-488a-8142-ce1c9b631b97

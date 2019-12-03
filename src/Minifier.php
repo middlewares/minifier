@@ -3,24 +3,56 @@ declare(strict_types = 1);
 
 namespace Middlewares;
 
-use Middlewares\Utils\Traits\HasStreamFactory;
 use Middlewares\Utils\Factory;
-use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use WyriHaximus\Compress\CompressorInterface;
+use WyriHaximus\CssCompress\Factory as CssFactory;
+use WyriHaximus\HtmlCompress\Factory as HtmlFactory;
+use WyriHaximus\JsCompress\Factory as JsFactory;
 
-abstract class Minifier
+class Minifier implements MiddlewareInterface
 {
-    use HasStreamFactory;
+    /**
+     * @var CompressorInterface
+     */
+    private $compressor;
 
     /**
      * @var string
      */
     protected $mimetype;
 
-    public function __construct(StreamFactoryInterface $streamFactory = null)
+    /**
+     * @var StreamFactoryInterface
+     */
+    private $streamFactory;
+
+    public static function html(StreamFactoryInterface $streamFactory = null): self
     {
+        return new static(HtmlFactory::construct(), 'text/html', $streamFactory);
+    }
+
+    public static function css(StreamFactoryInterface $streamFactory = null): self
+    {
+        return new static(CssFactory::construct(), 'text/css', $streamFactory);
+    }
+
+    public static function js(StreamFactoryInterface $streamFactory = null): self
+    {
+        return new static(JsFactory::construct(), 'text/javascript', $streamFactory);
+    }
+
+    public function __construct(
+        CompressorInterface $compressor,
+        string $mimetype,
+        StreamFactoryInterface $streamFactory = null
+    ) {
+        $this->compressor = $compressor;
+        $this->mimetype = $mimetype;
         $this->streamFactory = $streamFactory ?: Factory::getStreamFactory();
     }
 
@@ -32,7 +64,7 @@ abstract class Minifier
         $response = $handler->handle($request);
 
         if (stripos($response->getHeaderLine('Content-Type'), $this->mimetype) === 0) {
-            $stream = $this->createStream($this->minify((string) $response->getBody()));
+            $stream = $this->streamFactory->createStream($this->minify((string) $response->getBody()));
 
             return $response->withBody($stream)
                 ->withoutHeader('Content-Length');
@@ -41,8 +73,8 @@ abstract class Minifier
         return $response;
     }
 
-    /**
-     * Minify the body content.
-     */
-    abstract protected function minify(string $content): string;
+    private function minify(string $source): string
+    {
+        return $this->compressor->compress($source);
+    }
 }
