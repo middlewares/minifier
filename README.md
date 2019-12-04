@@ -62,7 +62,7 @@ $minifier = new Middlewares\Minifier($compressor, $mimeType, $streamFactory);
 Three static functions are provided to create instances of this middleware with common configuration for html, css and js responses:
 
 ```php
-$htmlMinifier = Middlewares\Minifier::css();
+$htmlMinifier = Middlewares\Minifier::html();
 $cssMinifier = Middlewares\Minifier::css();
 $jsMinifier = Middlewares\Minifier::js();
 ```
