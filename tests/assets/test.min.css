@@ -1,1 +1,1 @@
-body{background:blue;color:red}p + p{margin-top:10px}@media (min-width: 300px){body{font-size:1.2em}}
+body{background:blue;color:red}p+p{margin-top:10px}@media (min-width:300px){body{font-size:1.2em}}

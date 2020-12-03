@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.1] - 2020-12-03
+### Added
+- Support for PHP 8
+
 ## [2.0.0] - 2019-12-03
 ### Changed
 - `mrclay/minify` package was replaced by `wyrihaximus/html-compress`, `wyrihaximus/css-compress` and `wyrihaximus/js-compress`.
@@ -62,6 +66,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.1.0 - 2016-10-10
 First version
 
+[2.0.1]: https://github.com/middlewares/minifier/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/middlewares/minifier/compare/v1.1.0...v2.0.0
 [1.1.0]: https://github.com/middlewares/minifier/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/middlewares/minifier/compare/v0.5.0...v1.0.0
