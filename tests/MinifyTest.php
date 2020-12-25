@@ -8,7 +8,7 @@ use Middlewares\Utils\Dispatcher;
 use Middlewares\Utils\Factory;
 use PHPUnit\Framework\TestCase;
 
-class MinifierTest extends TestCase
+class MinifyTest extends TestCase
 {
     public function minifierProvider(): array
     {
