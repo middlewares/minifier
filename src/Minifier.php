@@ -31,17 +31,18 @@ class Minifier implements MiddlewareInterface
      */
     private $streamFactory;
 
-    public static function html(StreamFactoryInterface $streamFactory = null): self
+    public static function html(?StreamFactoryInterface $streamFactory = null): self
     {
+        /* @note We use static so that other classes can extend it and get the expected behaviour */
         return new static(HtmlFactory::construct(), 'text/html', $streamFactory);
     }
 
-    public static function css(StreamFactoryInterface $streamFactory = null): self
+    public static function css(?StreamFactoryInterface $streamFactory = null): self
     {
         return new static(CssFactory::construct(), 'text/css', $streamFactory);
     }
 
-    public static function js(StreamFactoryInterface $streamFactory = null): self
+    public static function js(?StreamFactoryInterface $streamFactory = null): self
     {
         return new static(JsFactory::construct(), 'text/javascript', $streamFactory);
     }
@@ -49,7 +50,7 @@ class Minifier implements MiddlewareInterface
     public function __construct(
         CompressorInterface $compressor,
         string $mimetype,
-        StreamFactoryInterface $streamFactory = null
+        ?StreamFactoryInterface $streamFactory = null
     ) {
         $this->compressor = $compressor;
         $this->mimetype = $mimetype;
