@@ -2,7 +2,7 @@ parameters:
     #treatPhpDocTypesAsCertain: false
     reportUnmatchedIgnoredErrors: false
     inferPrivatePropertyTypeFromConstructor: true
-    level: max
+    level: 8
     paths:
         - src
         - tests
