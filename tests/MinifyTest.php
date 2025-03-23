@@ -10,22 +10,28 @@ use PHPUnit\Framework\TestCase;
 
 class MinifyTest extends TestCase
 {
+    /**
+     * @return array<int, array<int, string|false>>
+     */
     public function minifierProvider(): array
     {
         $data = [
             [
                 'text/html',
                 file_get_contents(__DIR__.'/assets/test.html'),
+                /* @phpstan-ignore-next-line */
                 trim(file_get_contents(__DIR__.'/assets/test.min.html')),
             ],
             [
                 'text/css',
                 file_get_contents(__DIR__.'/assets/test.css'),
+                /* @phpstan-ignore-next-line */
                 trim(file_get_contents(__DIR__.'/assets/test.min.css')),
             ],
             [
                 'text/javascript',
                 file_get_contents(__DIR__.'/assets/test.js'),
+                /* @phpstan-ignore-next-line */
                 trim(file_get_contents(__DIR__.'/assets/test.min.js')),
             ],
         ];
@@ -36,7 +42,7 @@ class MinifyTest extends TestCase
     /**
      * @dataProvider minifierProvider
      */
-    public function testMinifier(string $mime, string $content, string $expected)
+    public function testMinifier(string $mime, string $content, string $expected): void
     {
         $response = Dispatcher::run([
             Minifier::html(),
